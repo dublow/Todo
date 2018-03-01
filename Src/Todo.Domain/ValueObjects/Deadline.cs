@@ -4,21 +4,24 @@ namespace Todo.Domain.ValueObjects
 {
     public sealed class Deadline : ValueObject<Deadline>
     {
-        private readonly DateTime _value;
+        private readonly DateTime _deadline;
 
-        public Deadline(DateTime value)
+        public Deadline(DateTime deadline)
         {
-            _value = value;
+            if (deadline == DateTime.MinValue)
+                throw new ArgumentNullException(nameof(deadline));
+
+            _deadline = deadline;
         }
 
         public override bool EqualsCore(Deadline other)
         {
-            return _value == other._value;
+            return _deadline == other._deadline;
         }
 
         public override int GetHashCodeCore()
         {
-            return _value.GetHashCode();
+            return _deadline.GetHashCode();
         }
     }
 }

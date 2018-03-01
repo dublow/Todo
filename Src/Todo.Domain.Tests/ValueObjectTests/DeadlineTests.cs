@@ -12,7 +12,7 @@ namespace Todo.Domain.Tests.ValueObjectTests
         {
             // arrange
             Deadline deadline = null;
-            Deadline otherDeadline = new Deadline(DateTime.MinValue);
+            Deadline otherDeadline = new Deadline(DateTime.MinValue.AddDays(1));
 
             // act
             var actual = otherDeadline.Equals(deadline);
@@ -25,7 +25,7 @@ namespace Todo.Domain.Tests.ValueObjectTests
         public void ShouldBeEqualWhenDeadlineHasSameReference()
         {
             // arrange
-            Deadline deadline = new Deadline(DateTime.MinValue);
+            Deadline deadline = new Deadline(DateTime.MinValue.AddDays(1));
             Deadline otherDeadline = deadline;
 
             // act
@@ -39,8 +39,8 @@ namespace Todo.Domain.Tests.ValueObjectTests
         public void ShouldBeEqualWhenDeadlineHasSameValue()
         {
             // arrange
-            Deadline deadline = new Deadline(DateTime.MinValue);
-            Deadline otherDeadline = new Deadline(DateTime.MinValue);
+            Deadline deadline = new Deadline(DateTime.MinValue.AddDays(1));
+            Deadline otherDeadline = new Deadline(DateTime.MinValue.AddDays(1));
 
             // act
             var actual = deadline.Equals(otherDeadline);
@@ -53,8 +53,8 @@ namespace Todo.Domain.Tests.ValueObjectTests
         public void ShouldBeEqualByOperatorWhenDeadlineHasSameValue()
         {
             // arrange
-            Deadline deadline = new Deadline(DateTime.MinValue);
-            Deadline otherDeadline = new Deadline(DateTime.MinValue);
+            Deadline deadline = new Deadline(DateTime.MinValue.AddDays(1));
+            Deadline otherDeadline = new Deadline(DateTime.MinValue.AddDays(1));
 
             // act
             var actual = deadline == otherDeadline;
@@ -67,7 +67,7 @@ namespace Todo.Domain.Tests.ValueObjectTests
         public void ShouldBeEqualByOperatorWhenDeadlineHasSameReference()
         {
             // arrange
-            Deadline deadline = new Deadline(DateTime.MinValue);
+            Deadline deadline = new Deadline(DateTime.MinValue.AddDays(1));
             Deadline otherDeadline = deadline;
 
             // act
@@ -81,7 +81,7 @@ namespace Todo.Domain.Tests.ValueObjectTests
         public void ShouldBeEqualByOperatorWhenDeadlineHasSameHashcode()
         {
             // arrange
-            Deadline deadline = new Deadline(DateTime.MinValue);
+            Deadline deadline = new Deadline(DateTime.MinValue.AddDays(1));
             Deadline otherDeadline = deadline;
 
             // act
@@ -95,7 +95,7 @@ namespace Todo.Domain.Tests.ValueObjectTests
         public void ShouldBeNotEqualByOperatorWhenDeadlineHasDifferentValue()
         {
             // arrange
-            Deadline deadline = new Deadline(DateTime.MinValue);
+            Deadline deadline = new Deadline(DateTime.MinValue.AddDays(1));
             Deadline otherDeadline = new Deadline(DateTime.MaxValue);
 
             // act
@@ -103,6 +103,15 @@ namespace Todo.Domain.Tests.ValueObjectTests
 
             // assert
             Assert.IsTrue(actual);
+        }
+
+        [TestMethod]
+        public void ShouldThrownArgumentNullExceptionWhenDeadlineIsMinDate()
+        {
+            // assert
+            Assert
+                .ThrowsException<ArgumentNullException>(
+                    () => new Deadline(DateTime.MinValue));
         }
     }
 }
