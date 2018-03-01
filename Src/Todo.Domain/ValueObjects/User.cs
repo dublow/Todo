@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Todo.Domain.Utils;
 
 namespace Todo.Domain.ValueObjects
 {
@@ -15,7 +16,7 @@ namespace Todo.Domain.ValueObjects
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name));
 
-            Name = CapitalizeName(name);
+            Name = name.Capitalize();
         }
 
         public override bool EqualsCore(User other)
@@ -31,15 +32,6 @@ namespace Todo.Domain.ValueObjects
         public override string ToString()
         {
             return Name;
-        }
-
-        private string CapitalizeName(string value)
-        {
-            return new String(value.Select((c, index) => {
-                return index == 0
-                    ? Char.ToUpper(c)
-                    : Char.ToLower(c);
-            }).ToArray());
         }
     }
 }
