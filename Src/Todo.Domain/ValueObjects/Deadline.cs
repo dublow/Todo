@@ -14,6 +14,8 @@ namespace Todo.Domain.ValueObjects
             _deadline = deadline;
         }
 
+
+
         public override bool EqualsCore(Deadline other)
         {
             return _deadline == other._deadline;
@@ -22,6 +24,11 @@ namespace Todo.Domain.ValueObjects
         public override int GetHashCodeCore()
         {
             return _deadline.GetHashCode();
+        }
+
+        public bool IsExpired(DateTime currentDate)
+        {
+            return _deadline <= currentDate;
         }
     }
 }

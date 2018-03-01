@@ -113,5 +113,47 @@ namespace Todo.Domain.Tests.ValueObjectTests
                 .ThrowsException<ArgumentNullException>(
                     () => new Deadline(DateTime.MinValue));
         }
+
+        [TestMethod]
+        public void ShouldNotBeExpiredWhenDeadlineIsGreaterThanArgumentDate()
+        {
+            // arrange
+            DateTime currentDate = new DateTime(2018, 08, 01);
+            Deadline deadline = new Deadline(new DateTime(2018, 10, 01));
+
+            // act
+            var actual = deadline.IsExpired(currentDate);
+
+            // assert
+            Assert.IsFalse(actual);
+        }
+
+        [TestMethod]
+        public void ShouldBeExpiredWhenDeadlineIsEqualToArgumentDate()
+        {
+            // arrange
+            DateTime currentDate = new DateTime(2018, 08, 01);
+            Deadline deadline = new Deadline(new DateTime(2018, 08, 01));
+
+            // act
+            var actual = deadline.IsExpired(currentDate);
+
+            // assert
+            Assert.IsTrue(actual);
+        }
+
+        [TestMethod]
+        public void ShouldBeExpiredWhenDeadlineIsLessThanArgumentDate()
+        {
+            // arrange
+            DateTime currentDate = new DateTime(2018, 08, 01);
+            Deadline deadline = new Deadline(new DateTime(2018, 06, 01));
+
+            // act
+            var actual = deadline.IsExpired(currentDate);
+
+            // assert
+            Assert.IsTrue(actual);
+        }
     }
 }
